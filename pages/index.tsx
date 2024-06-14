@@ -1,8 +1,9 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
+import { NextPage } from 'next';
 
+// TODO 将钱包链接迁移至其他地方
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -80,5 +81,4 @@ const Home: NextPage = () => {
     </div>
   );
 };
-
 export default Home;
