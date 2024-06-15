@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const UserSchema = new mongoose.Schema({
   phone: Number,
-  username: String,
+  username: { type: String, required: true, unique: true },
   displayName: String,
   profileUrl: String,
   avatarUrl: String,

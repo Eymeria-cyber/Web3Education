@@ -1,7 +1,7 @@
-import connectMongoDb from '../../libs/db'
-import Course from '../../models/course'
+import connectMongoDb from '../../../libs/db'
+import Course from '../../../models/course'
 import mongoose from 'mongoose'
-const { handleMongooseError } = require('../../libs/errorHandler')
+const { handleMongooseError } = require('../../../libs/errorHandler')
 
 export default async function handler(req, res) {
   const { method } = req
