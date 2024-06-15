@@ -1,7 +1,7 @@
 // TODO
 // 缺少 entity id？
 
-export const MockLesson = {
+export const MockCourse = {
     "title": "Advanced Chinese Listening Course",
     "description": "This course aims to enhance your" ,
     "segments": [
@@ -37,3 +37,5 @@ export const MockLesson = {
       }
     ]
   }
+
+  export const MockCourseList = Array.from({length: 10}).map(() => MockCourse)

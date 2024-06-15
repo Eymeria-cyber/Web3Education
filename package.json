@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@egjs/react-flicking": "^4.11.3",
     "@nextui-org/react": "^2.4.1",
     "@rainbow-me/rainbowkit": "^2.1.2",
     "@tanstack/react-query": "^5.28.4",
