@@ -11,6 +11,7 @@ import {
   optimism,
   polygon,
   sepolia,
+  lineaSepolia,
 } from 'wagmi/chains'
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { NextUIProvider } from '@nextui-org/react'
@@ -26,6 +27,7 @@ const config = getDefaultConfig({
     polygon,
     optimism,
     arbitrum,
+    lineaSepolia,
     base,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],

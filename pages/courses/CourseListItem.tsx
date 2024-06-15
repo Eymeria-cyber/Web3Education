@@ -1,4 +1,5 @@
 import { Card, CardBody, CardFooter, CardHeader, Divider, Link, Image, Button } from "@nextui-org/react";
+import { useRouter } from "next/router";
 import { FC } from "react";
 type Props = {
     course: {
@@ -10,7 +11,7 @@ type Props = {
 }
 export const CourseListItem: FC<Props> = (props) => {
     const { course } = props
-
+    const router = useRouter()
     return <Card >
         <CardHeader className="flex gap-3">
             <Image
@@ -28,7 +29,7 @@ export const CourseListItem: FC<Props> = (props) => {
         <Divider />
         <CardFooter className="flex justify-end">
             {course.unlocked && <Button color="primary" variant="solid">Free To Learn</Button>}
-            {!course.unlocked && <Button color="secondary" variant="solid">Staking To Unlock</Button>}
+            {!course.unlocked && <Button color="secondary" variant="solid"><Link href={`${router.asPath}/${course.id}/staking`} className="text-white">Staking To Unlock</Link></Button>}
 
         </CardFooter>
     </Card>
