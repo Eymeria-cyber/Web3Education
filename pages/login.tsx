@@ -18,7 +18,9 @@ export default function LoginPage() {
     })
 
     if (response.ok) {
-      router.push('/')
+      const data = await response.json()
+      const redirectTo = data.redirectTo || '/'
+      router.push(redirectTo)
     } else {
       // Handle errors
     }
