@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 const SegmentSchema = new mongoose.Schema({
+  _id: { type: Number, require: true },
   title: String,
   chineseSubtitle: String,
   englishSubtitle: String,
@@ -11,7 +12,7 @@ const CourseSchema = new mongoose.Schema({
   author: String,
   segments: [SegmentSchema],
   date: { type: Date, default: Date.now },
-  hidden: { type: Boolean, default: true },
+  free: { type: Boolean, default: false },
 })
 
 // 通过立即执行函数来关联Course到mongoose返回值类型，外部使用Course时会有类型提示

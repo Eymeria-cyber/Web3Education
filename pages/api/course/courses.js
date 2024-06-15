@@ -1,3 +1,4 @@
+import { json } from 'stream/consumers'
 import connectMongoDb from '../../../libs/db'
 import Course from '../../../models/course'
 import mongoose from 'mongoose'
@@ -10,7 +11,14 @@ export default async function handler(req, res) {
       try {
         //获取所有课程
         connectMongoDb()
-        const courses = await Course.find({})
+        const { id } = req.query // 从查询参数中获取 id
+        let courses
+        if (id) {
+          courses = await Course.findById(id) // 根据 id 查询特定课程
+        } else {
+          courses = await Course.find({}) // 获取所有课程
+        }
+        // console.log(courses.segments[0].id)
         res.status(200).json(courses)
       } catch (error) {
         res.status(500).json({ error: 'Error fetching course.' })
