@@ -13,6 +13,9 @@ import {
   sepolia,
 } from 'wagmi/chains'
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { NextUIProvider } from '@nextui-org/react'
+import { NextPage } from 'next'
+import { ReactElement, ReactNode } from 'react'
 
 const config = getDefaultConfig({
   appName: 'RainbowKit App',
@@ -30,15 +33,25 @@ const config = getDefaultConfig({
 
 const client = new QueryClient()
 
-function MyApp({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+ 
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page)
   return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={client}>
-        <RainbowKitProvider>
-          <Component {...pageProps} />
-        </RainbowKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <NextUIProvider>
+      <WagmiProvider config={config}>
+        <QueryClientProvider client={client}>
+          <RainbowKitProvider>
+            {getLayout(<Component {...pageProps} />)}
+          </RainbowKitProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
+    </NextUIProvider>
   )
 }
 

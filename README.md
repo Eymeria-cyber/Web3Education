@@ -15,3 +15,9 @@ yarn run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ##
+
+
+## 开发记录
+
+1. tailwindcss 添加：https://tailwindcss.com/docs/guides/nextjs
+2. nextui 添加：https://nextui.org/docs/guide/installation#manual-installation
