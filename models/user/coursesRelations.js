@@ -1,17 +1,18 @@
 import mongoose from 'mongoose'
 
-const coursesRelationsSchema = new mongoose.Schema({
-  username: { type: string, requir: true },
-  courseId: { type: ObjectId, require },
-  finish: { type: Boolean, default: true },
+const CoursesRelationsSchema = new mongoose.Schema({
+  username: { type: String, require: true },
+  courseId: { type: String, require },
+  finish: { type: Boolean, default: false },
+  unlock: { type: Boolean, default: false },
 })
 
-const coursesRelations = () => {
-  try {
-    return mongoose.model('coursesRelation')
-  } catch {
-    //如果mongo已经有一个模型被定义，就直接返回这个模型。
-    return mongoose.model('coursesRelation', coursesRelationsSchema)
-  }
+let CoursesRelations
+
+try {
+  CoursesRelations = mongoose.model('CoursesRelations')
+} catch {
+  CoursesRelations = mongoose.model('CoursesRelations', CoursesRelationsSchema)
 }
-export default coursesRelations
+
+export default CoursesRelations
