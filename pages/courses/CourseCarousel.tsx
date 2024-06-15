@@ -1,4 +1,3 @@
-'use client'
 
 import { FC, useState } from "react";
 import Flicking, { MoveEvent, WillChangeEvent } from "@egjs/react-flicking";
@@ -10,7 +9,7 @@ type Props = {
 export const CourseCarousel: FC<Props> = (props) => {
     const { list } = props;
     return <Flicking hideBeforeInit={true} align="center" circular>
-        {list.map((item, index) => <div className="w-full mx-5" key={index}>
+        {list.map((item, index) => <div className="w-full mx-5 h-auto" key={index}>
             <CourseCard title={item.title} description={item.description} />
         </div>)}
     </Flicking>
