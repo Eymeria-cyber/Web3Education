@@ -28,9 +28,13 @@ export default function LoginPage() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <button type="submit">Login</button>
+      <input
+        type="phone"
+        name="phone"
+        placeholder="Input your Phone Number"
+        required
+      />
+      <button type="submit">sign in/ sign up</button>
     </form>
   )
 }

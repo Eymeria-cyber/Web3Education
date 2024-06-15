@@ -6,23 +6,21 @@ const { encrypt, decrypt } = require('../../../libs/crypto')
 
 export default async function handler(req, res) {
   try {
-    const { email, password } = req.body
+    const { phone } = req.body
     //连接数据库
     connectMongoDb()
-    let user = await Users.findOne({ email })
+    let user = await Users.findOne({ username: phone })
     // 如果用户不存在，创建新用户
     if (!user) {
-      // 加密密码
-      console.log(password)
-      const encryPassword = encrypt(password)
-      console.log(password)
       // 创建用户
       user = await Users.create({
-        email,
-        password: encryPassword,
+        phone: phone,
+        username: phone,
+        displayName: phone,
       })
     }
-    const sessionData = { email, password }
+    //存入cookie中
+    const sessionData = { username: user.username, phone: user.phone }
     let encryptedSessionData = encrypt(JSON.stringify(sessionData))
     const cookie = serialize('currentUser', encryptedSessionData, {
       httpOnly: true,
