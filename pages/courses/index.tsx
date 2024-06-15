@@ -14,8 +14,8 @@ const CoursePage: NextPageWithLayout = () => {
                 aria-label="Actions"
                 onAction={(key) => alert(key)}
             >
-                {MockCourseList.map((lesson, index) => {
-                    return <ListboxItem className="overflow-visible" key={index}><CourseListItem course={{...lesson, id: index, unlocked: index === 0}}/></ListboxItem>
+                {MockCourseList.map((course, index) => {
+                    return <ListboxItem className="overflow-visible" key={index}><CourseListItem course={{...course, id: index, unlocked: index === 0}}/></ListboxItem>
                 })}
             </Listbox>
         </div>
