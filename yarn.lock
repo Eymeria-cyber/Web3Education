@@ -19,6 +19,20 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
+"@cfcs/core@^0.0.24":
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/@cfcs/core/-/core-0.0.24.tgz#2ab40d1fe5cf64f50acc31983a5b589521268dde"
+  integrity sha512-feB38qu+eDk0Pggh/yR7gjaNmvUYA2uCxHP3Pz2MLE4LZ/9jPdtu8bzCSI47yTEhWyZCF5Pk698hdz8IN2mTjA==
+  dependencies:
+    "@egjs/component" "^3.0.4"
+
+"@cfcs/core@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@cfcs/core/-/core-0.1.0.tgz#64346f7634b46de6e9b1d4c195743b9b8e603162"
+  integrity sha512-kvYX0RpL45XTHJ5sW7teNbKeAa7pK3nNqaJPoFfZDPTIBJOkTtRD3QhkBG+O3Hu69a8xeMoPvF6y/RtJ6JUOdA==
+  dependencies:
+    "@egjs/component" "^3.0.4"
+
 "@coinbase/wallet-sdk@4.0.3":
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-4.0.3.tgz#fd52dd4c168c35979c7b3294018a6f78d163a593"
@@ -30,6 +44,57 @@
     keccak "^3.0.3"
     preact "^10.16.0"
     sha.js "^2.4.11"
+
+"@egjs/agent@^2.2.1":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@egjs/agent/-/agent-2.4.3.tgz#6d44e2fb1ff7bab242c07f82732fe60305ac6f06"
+  integrity sha512-XvksSENe8wPeFlEVouvrOhKdx8HMniJ3by7sro2uPF3M6QqWwjzVcmvwoPtdjiX8O1lfRoLhQMp1a7NGlVTdIA==
+
+"@egjs/axes@^3.9.0":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@egjs/axes/-/axes-3.9.0.tgz#46932e449851414e7149826bee109b406d34b573"
+  integrity sha512-V+HxHxEGmlu/0yJ9kqlj2doiJt1yVeROTy/0Qf+IaJ9hMabjzUgfYffGR+3atcRpejjGbcpAIiBrGbAkDVaLjg==
+  dependencies:
+    "@cfcs/core" "^0.1.0"
+    "@egjs/agent" "^2.2.1"
+    "@egjs/component" "^3.0.1"
+
+"@egjs/component@^3.0.1", "@egjs/component@^3.0.2", "@egjs/component@^3.0.4":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@egjs/component/-/component-3.0.5.tgz#2dc86e835d5dc5055cdf46c7cd794eb45330e1b6"
+  integrity sha512-cLcGizTrrUNA2EYE3MBmEDt2tQv1joVP1Q3oDisZ5nw0MZDx2kcgEXM+/kZpfa/PAkFvYVhRUZwytIQWoN3V/w==
+
+"@egjs/flicking@~4.11.3":
+  version "4.11.3"
+  resolved "https://registry.yarnpkg.com/@egjs/flicking/-/flicking-4.11.3.tgz#a58707e41fd0a8efbbe12ed7b1a8f9df66911f61"
+  integrity sha512-90IbXMwdiNL4+Yrvfgi4zYk9XKLbjVaVLus5lIl28twQiT/KV3W9ypJOJEK7U5U9oS2q7dn8OJZolD8JNOsxag==
+  dependencies:
+    "@egjs/axes" "^3.9.0"
+    "@egjs/component" "^3.0.1"
+    "@egjs/imready" "^1.3.1"
+    "@egjs/list-differ" "^1.0.1"
+
+"@egjs/imready@^1.3.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@egjs/imready/-/imready-1.4.1.tgz#4d72f67b5e8212f0ef449dd2b5b79f975110352b"
+  integrity sha512-JIOBs4lB7FYdsKi5uvz2j3SObX8eShtZjtqlOH41tm185aJOQZwiKBK8+V4MxzG4X6DqVhpdN8UcuVwBbElfsg==
+  dependencies:
+    "@cfcs/core" "^0.0.24"
+    "@egjs/component" "^3.0.1"
+
+"@egjs/list-differ@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@egjs/list-differ/-/list-differ-1.0.1.tgz#5772b0f8b87973bb67827f6c7d7df8d7f64a22eb"
+  integrity sha512-OTFTDQcWS+1ZREOdCWuk5hCBgYO4OsD30lXcOCyVOAjXMhgL5rBRDnt/otb6Nz8CzU0L/igdcaQBDLWc4t9gvg==
+
+"@egjs/react-flicking@^4.11.3":
+  version "4.11.3"
+  resolved "https://registry.yarnpkg.com/@egjs/react-flicking/-/react-flicking-4.11.3.tgz#93b2a0cd55b8d541a1ef2bbc22e1e71e01f9bcb7"
+  integrity sha512-OsRHUDlFR1z0FVRB+ljf7d+uAyRV0weVU4ckDshgKwHfb4htLJeGzc3zPUQyKIIEQNzYKIIGiKoCqsF5Hk2ahg==
+  dependencies:
+    "@egjs/component" "^3.0.2"
+    "@egjs/flicking" "~4.11.3"
+    "@egjs/list-differ" "^1.0.1"
 
 "@emotion/hash@^0.9.0":
   version "0.9.1"
