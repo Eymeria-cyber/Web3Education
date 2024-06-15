@@ -8,7 +8,7 @@ type Props = {
 }
 export const CourseCard: FC<Props> = (props) => {
     const { title, description } = props;
-    return <Card isFooterBlurred className="h-[300px]">
+    return <Card isFooterBlurred>
         <CardBody className="overflow-visible p-0">
             <Image
                 alt="Card background"

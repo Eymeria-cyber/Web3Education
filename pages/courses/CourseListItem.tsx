@@ -11,7 +11,7 @@ type Props = {
 export const CourseListItem: FC<Props> = (props) => {
     const { course } = props
 
-    return <Card className="max-w-[400px]">
+    return <Card >
         <CardHeader className="flex gap-3">
             <Image
                 alt="nextui logo"
@@ -21,7 +21,7 @@ export const CourseListItem: FC<Props> = (props) => {
                 width={40}
             />
             <div className="flex flex-col">
-                <p className="text-md">{course.title}</p>
+                <p className="text-medium">{course.title}</p>
                 <p className="text-small text-default-500">{course.description}</p>
             </div>
         </CardHeader>
