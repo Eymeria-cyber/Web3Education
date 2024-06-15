@@ -2,20 +2,16 @@ const crypto = require('crypto')
 
 // 确保使用与加密时相同的算法和密钥
 const algorithm = 'aes-256-cbc'
-const key = crypto.randomBytes(32) // 确保这与加密时使用的key相同
+const key = '12345678901234567890123456789012' // 确保这与加密时使用的key相同
 
-function decrypt(encryptedDataWithIv) {
+function decrypt(encryptedData, iv) {
   const decipher = crypto.createDecipheriv(
     algorithm,
     Buffer.from(key),
-    Buffer.from(encryptedDataWithIv.iv, 'hex')
+    Buffer.from(iv, 'hex')
   )
 
-  let decrypted = decipher.update(
-    encryptedDataWithIv.encryptedData,
-    'hex',
-    'utf8'
-  )
+  let decrypted = decipher.update(encryptedData, 'hex', 'utf8')
   decrypted += decipher.final('utf8')
   return decrypted
 }

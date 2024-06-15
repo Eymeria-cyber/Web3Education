@@ -1,20 +1,20 @@
 import mongoose from 'mongoose'
 
-const userProgessSchema = new mongoose.Schema(
+//注意要大写，开头必须，我也不知道为啥
+const UserProgessSchema = new mongoose.Schema(
   {
     username: { type: String, required: true },
-    courseId: { type: mongoose.Schema.Types.ObjectId, required: true },
-    SegmentId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    courseId: { type: String, required: true, unique: true }, //在进度表里，username会重复，但courseid和segmentid不会，任取一个作为唯一索引，防止出现重复数据
+    segmentId: { type: String, required: true },
   },
   { timestamps: true }
 )
-const userProgress = () => {
-  try {
-    return mongoose.model('userProgress')
-  } catch {
-    //如果mongo已经有一个模型被定义，就直接返回这个模型。
-    return mongoose.model('userProgress', userProgessSchema)
-  }
+let UserProgress
+
+try {
+  UserProgress = mongoose.model('UserProgress')
+} catch {
+  UserProgress = mongoose.model('UserProgress', UserProgessSchema)
 }
 
-export default userProgress
+export default UserProgress

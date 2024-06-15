@@ -2,7 +2,7 @@
 // 缺少 entity id？
 
 export const MockCourse = {
-  _id: '666d1f5899a7a272af8c4473',
+  _id: '666d563b720ded4b92b8a0c9',
   title: 'Advanced Chinese Listening Course',
   description: 'This course aims to enhance your',
   segments: [
