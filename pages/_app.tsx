@@ -11,11 +11,13 @@ import {
   optimism,
   polygon,
   sepolia,
+  lineaSepolia,
 } from 'wagmi/chains'
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { NextUIProvider } from '@nextui-org/react'
 import { NextPage } from 'next'
 import { ReactElement, ReactNode } from 'react'
+import Head from 'next/head'
 
 const config = getDefaultConfig({
   appName: 'RainbowKit App',
@@ -25,6 +27,7 @@ const config = getDefaultConfig({
     polygon,
     optimism,
     arbitrum,
+    lineaSepolia,
     base,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],
@@ -36,7 +39,7 @@ const client = new QueryClient()
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
- 
+
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
@@ -47,6 +50,15 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <WagmiProvider config={config}>
         <QueryClientProvider client={client}>
           <RainbowKitProvider>
+            <Head>
+              <title>W3E</title>
+              <meta
+                name="description"
+                content="Web3 Education - Learn Web3 English with W3E"
+                key="desc"
+              />
+              <link rel="icon" href="/icon.png" />
+            </Head>
             {getLayout(<Component {...pageProps} />)}
           </RainbowKitProvider>
         </QueryClientProvider>
