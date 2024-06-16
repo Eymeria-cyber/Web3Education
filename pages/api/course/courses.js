@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         } else {
           courses = await Course.find({}) // 获取所有课程
         }
-        // console.log(courses.segments[0].id)
+        // console.log(courses.segments)
         res.status(200).json(courses)
       } catch (error) {
         res.status(500).json({ error: 'Error fetching course.' })
