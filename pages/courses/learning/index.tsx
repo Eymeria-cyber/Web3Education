@@ -4,6 +4,9 @@ import { useRouter } from 'next/router'
 import { Segment } from './Segment'
 import RootLayout from '../../../components/RootLayout'
 import { NavPage } from '../../../components/BottomBar'
+import Flicking, { MoveEvent, WillChangeEvent } from '@egjs/react-flicking'
+import { User, Link } from '@nextui-org/react'
+import LearnButton from './LearnBottom'
 
 export type segment = {
   _id: number
@@ -32,6 +35,7 @@ const LearnPage: NextPageWithLayout = () => {
 
   const NextSegment = () => {
     if (currentIndex < segmentList.length - 1) {
+      console.log(currentIndex)
       setCurrentIndex(currentIndex + 1)
     } else {
       // Handle completion of the course, e.g.,
@@ -39,29 +43,30 @@ const LearnPage: NextPageWithLayout = () => {
     }
   }
 
-  const PrevSegment = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1)
-    }
-  }
   return (
-    <div>
+    <div className="sm:">
       {segmentList.map((segment, index) => (
         <div
-          style={{ display: currentIndex === index ? 'inline-block' : 'none' }}
+          style={{
+            display: currentIndex >= index ? 'block' : 'none',
+            // transform:
+            //   currentIndex === index ? 'translateY(0)' : 'translateY(100%)',
+            // transition: 'transform 0.3s',
+          }}
         >
+          <User
+            name="Frog Techer"
+            description={'你这个年纪怎么睡得着的？'}
+            avatarProps={{
+              src: '/icon.png',
+            }}
+          />
           <Segment key={segment._id} segment={segment} />
         </div>
       ))}
-      <button
-        onClick={PrevSegment}
-        style={{ display: currentIndex > 0 ? 'inline-block' : 'none' }}
-      >
-        上一句
-      </button>
-      <button onClick={NextSegment}>
-        {currentIndex < segmentList.length - 1 ? '下一句' : '完成课程'}
-      </button>
+      <LearnButton onClick={NextSegment}>
+        {currentIndex === segmentList.length - 1 ? '完成课程' : '继续'}
+      </LearnButton>
     </div>
   )
 }
