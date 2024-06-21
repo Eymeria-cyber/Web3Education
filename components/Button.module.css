@@ -1,0 +1,21 @@
+.button.active {
+    background: linear-gradient(135deg, #9999ff, #cc66ff);
+    box-shadow: inset 0 4px 6px rgba(255, 255, 255, 0.2); /* 保持轻微的白色内阴影 */
+    transform: translateY(1px); /* 保持位移效果 */
+}
+
+/* 原有的按钮样式保持不变 */
+.button {
+    background: linear-gradient(135deg, #e6aaff, #ff99ff); /* 更偏向紫色和粉色的明亮渐变 */
+    color: #000000;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

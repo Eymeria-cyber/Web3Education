@@ -7,6 +7,23 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+    background: radial-gradient(
+      circle at top left,
+      rgba(0, 0, 128, 0.2) 5%,   /* 上方开始几乎透明的深紫色 */
+      rgba(0, 0, 255, 0.8) 30%,  /* 渐变至较明显的蓝色，透明度增加 */
+      rgba(255, 0, 255, 0.8) 60%, /* 粉色区域，同样保持较高透明度 */
+      rgba(128, 0, 128, 0.2) 90%, /* 接近底部时透明度降低，模拟不规则边缘 */
+      rgba(0, 0, 128, 0.1) 100%   /* 底部完全透明 */
+  ),
+  radial-gradient(
+      circle at bottom right,
+      rgba(0, 0, 128, 0.1) 5%,    /* 右下角开始透明的深紫色 */
+      rgba(0, 0, 255, 0.8) 30%,   /* 向中心渐变至蓝色，透明度变化 */
+      rgba(255, 0, 255, 0.8) 60%, /* 粉色区域 */
+      rgba(128, 0, 128, 0.2) 90%, /* 边缘透明度降低 */
+      rgba(0, 0, 128, 0.1) 100%   /* 底部完全透明 */
+  );
 }
 
 a {

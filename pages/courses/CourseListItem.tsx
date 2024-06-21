@@ -8,8 +8,10 @@ import {
   Image,
   Button,
 } from '@nextui-org/react'
+import classname from 'classnames'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
+import styles from './CourseListItem.module.css'
 type Props = {
   course: {
     id: string
@@ -24,8 +26,8 @@ export const CourseListItem: FC<Props> = (props) => {
   const { course } = props
   const router = useRouter()
   return (
-    <Card>
-      <CardHeader className="flex gap-3">
+    <Card className={styles.card}>
+      <CardHeader className={classname("flex gap-3")}>
         <Image
           alt="nextui logo"
           height={40}
@@ -35,7 +37,7 @@ export const CourseListItem: FC<Props> = (props) => {
         />
         <div className="flex flex-col">
           <p className="text-medium">{course.title}</p>
-          <p className="text-small text-default-500">{course.description}</p>
+          <p className="text-small text-gray-700 text-default-500">{course.description}</p>
         </div>
       </CardHeader>
       <Divider />
