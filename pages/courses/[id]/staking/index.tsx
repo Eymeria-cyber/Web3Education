@@ -9,16 +9,14 @@ import {
   useWaitForTransactionReceipt
 } from "wagmi";
 import { parseAbi, parseEther } from "viem";
-const STAKE_CONTRACT_ADDRESS = '0x07b255FC3481d70f8AdA5AdcD8c8324DeaFa4d4b'
-const ABI = {
-  stakeAndUnlockProject: 'function stakeAndUnlockProject(uint256 _projectId) payable'
-}
+import { ContractConstant } from "@/contract";
+
+const { StakeContractAddress, Contract, StakeValueEther } = ContractConstant
 const StakingPage: NextPage = () => {
   const router = useRouter()
   const courseId = router.query.id as string;
   const { isConnected } = useAccount()
   const { data: hash, writeContract, isPending ,error } = useWriteContract()
-
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
       hash,
@@ -33,12 +31,12 @@ const StakingPage: NextPage = () => {
       <ConnectButton />
       {isConnected && <Button disabled={isPending} onClick={() => {
         writeContract({
-          address: STAKE_CONTRACT_ADDRESS,
+          address: StakeContractAddress,
           gasPrice: parseEther('0.000000001'),
-          abi: parseAbi([ABI.stakeAndUnlockProject]),
+          abi: parseAbi([Contract.stakeAndUnlockProject.signatures]),
           args: [BigInt(courseId!)],
-          functionName: 'stakeAndUnlockProject',
-          value: parseEther('0.01'),
+          functionName: Contract.stakeAndUnlockProject.functionName,
+          value: parseEther(StakeValueEther),
         })
       }}>{isPending ? 'Staking...' : 'Stake'}</Button>}
       {hash && <div>Transaction Hash: {hash}</div>}

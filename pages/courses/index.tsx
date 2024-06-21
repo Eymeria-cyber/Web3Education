@@ -28,7 +28,7 @@ const CoursePage: NextPageWithLayout = () => {
       <Listbox aria-label="Actions" onAction={(key) => alert(key)}>
         {courseList.map((course, index) => {
           return (
-            <ListboxItem className="overflow-visible" key={index}>
+            <ListboxItem className="overflow-visible" key={index} textValue={`${course.title}:${course.description}`}>
               <CourseListItem course={{ ...course }} />
             </ListboxItem>
           )
