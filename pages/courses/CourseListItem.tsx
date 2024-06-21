@@ -16,6 +16,8 @@ type Props = {
     title: string
     description: string
     free: boolean
+    completed: boolean
+    claimed: boolean
   }
 }
 export const CourseListItem: FC<Props> = (props) => {
@@ -41,6 +43,7 @@ export const CourseListItem: FC<Props> = (props) => {
         {course.free && (
           <Button color="primary" variant="solid">
             <Link
+              // @ts-ignore
               href={`${router.asPath}/learning?id=${course._id}`}
               className="text-white"
             >
@@ -48,16 +51,26 @@ export const CourseListItem: FC<Props> = (props) => {
             </Link>
           </Button>
         )}
-        {!course.free && (
-          <Button color="secondary" variant="solid">
+        {/* 链上的课程 */}
+        {!course.free && <>
+          {!course.completed && !course.claimed && <Button color="secondary" variant="solid">
             <Link
               href={`${router.asPath}/${course.id}/staking`}
               className="text-white"
             >
               Staking To Unlock
             </Link>
-          </Button>
-        )}
+          </Button>}
+          {/* 是否需要区分是否claimed？还是直接完成？ */}
+          {course.completed && !course.claimed && <Button color="secondary" variant="solid">
+            <Link
+              href={`${router.asPath}/${course.id}/staking`}
+              className="text-white"
+            >
+              Claim
+            </Link>
+          </Button>}
+        </>}
       </CardFooter>
     </Card>
   )

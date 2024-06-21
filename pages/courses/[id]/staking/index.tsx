@@ -9,9 +9,9 @@ import {
   useWaitForTransactionReceipt
 } from "wagmi";
 import { parseAbi, parseEther } from "viem";
-import { ContractConstant } from "@/contract";
+import { StakeContractConstant } from "@/contract";
 
-const { StakeContractAddress, Contract, StakeValueEther } = ContractConstant
+const { Address: StakeContractAddress, Contract, StakeValueEther } = StakeContractConstant
 const StakingPage: NextPage = () => {
   const router = useRouter()
   const courseId = router.query.id as string;
