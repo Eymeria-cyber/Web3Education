@@ -6,8 +6,11 @@
 
 /* 原有的按钮样式保持不变 */
 .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: linear-gradient(135deg, #e6aaff, #ff99ff); /* 更偏向紫色和粉色的明亮渐变 */
-    color: #000000;
+    color: #fff;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -16,6 +19,13 @@
     margin: 5px;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button.secondary {
+    background: #6967ee; 
+}
+.button.third {
+    background: #a371d8; 
 }

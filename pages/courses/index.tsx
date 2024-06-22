@@ -40,35 +40,30 @@ const CoursePage: NextPageWithLayout = () => {
     console.log('=======', getAllProjectsResult)
   }, [getAllProjectsResult])
   return (
-    <div>
+    <div className='flex flex-col gap-4'>
       <CourseCarousel list={MockCourseList} />
-      <Listbox>
+      <div className='flex flex-col gap-4 mx-4'>
         {freeCourseList.map((course, index) => {
           return (
-            <ListboxItem className="overflow-visible" key={index} textValue={`${course.title}:${course.description}`}>
-              <CourseListItem course={{ ...course, completed: false, claimed: false }} />
-            </ListboxItem>
+            <CourseListItem key={index} course={{ ...course, completed: false, claimed: false }} />
           )
         })}
 
-      </Listbox>
-      <Listbox>
         {chainCourseList.map(course => {
           const { id, completed, description, name } = course
-          return <ListboxItem className="overflow-visible" key={id.toString()} textValue={`${name}:${description}`}>
-            <CourseListItem course={
-              {
-                id: id.toString(),
-                title: name,
-                description,
-                free: false,
-                completed,
-                claimed: false
-              }
-            } />
-          </ListboxItem>
+          return <CourseListItem key={id} course={
+            {
+              id: id.toString(),
+              title: name,
+              description,
+              free: false,
+              completed,
+              claimed: false
+            }
+          } />
         })}
-      </Listbox>
+      </div>
+
     </div>
   )
 }
