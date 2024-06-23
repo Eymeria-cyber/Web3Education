@@ -13,6 +13,7 @@ const CourseSchema = new mongoose.Schema({
   segments: [SegmentSchema],
   date: { type: Date, default: Date.now },
   free: { type: Boolean, default: false },
+  pid: { type: String, required: true },
 })
 
 // 通过立即执行函数来关联Course到mongoose返回值类型，外部使用Course时会有类型提示
