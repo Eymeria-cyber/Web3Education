@@ -12,7 +12,6 @@ export default async function handler(req, res) {
     const cookie = req.cookies['currentUser']
     const iv = req.cookies['iv']
     const decryptedSessionData = decrypt(cookie, iv)
-
     // 根据 courseId 和 username 查找进度
     try {
       const currentUser = JSON.parse(decryptedSessionData)

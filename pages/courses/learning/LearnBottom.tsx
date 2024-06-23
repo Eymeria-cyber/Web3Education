@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+
 import { Button } from '@nextui-org/react'
 import confetti from 'canvas-confetti'
 
