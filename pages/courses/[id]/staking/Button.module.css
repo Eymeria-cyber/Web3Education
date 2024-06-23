@@ -1,0 +1,5 @@
+
+/* 原有的按钮样式保持不变 */
+.button {
+    background: linear-gradient(135deg, #e6aaff, #ff99ff); /* 更偏向紫色和粉色的明亮渐变 */
+}

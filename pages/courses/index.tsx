@@ -5,7 +5,10 @@ import { NextPageWithLayout } from '../_app'
 import { MockCourseList } from './mock'
 import { CourseCarousel } from './CourseCarousel'
 import { CourseListItem } from './CourseListItem'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useReadContract } from 'wagmi'
+import { parseAbi } from 'viem'
+import { StakeContractConstant } from '@/contract'
 
 type Course = {
   id: string
@@ -15,25 +18,52 @@ type Course = {
 }
 
 const CoursePage: NextPageWithLayout = () => {
-  const [courseList, setCourseList] = useState<Course[]>([])
+  const [freeCourseList, setFreeCourseList] = useState<Course[]>([])
   useEffect(() => {
     fetch('api/course/courses')
       .then((response) => response.json())
-      .then((data) => setCourseList(data))
+      .then((data) => setFreeCourseList(data.filter((course: Course) => course.free)))
       .catch((error) => console.error(error))
   }, [])
+  const getAllProjectsResult = useReadContract({
+    address: StakeContractConstant.Address,
+    abi: parseAbi([StakeContractConstant.Contract.getAllProjects.signatures]),
+    functionName: 'getAllProjects',
+  })
+  const { isFetched, data } = getAllProjectsResult
+  const chainCourseList = useMemo(() => {
+    // TODO: 关联数据库user-course id
+    if (isFetched) return data ?? []
+    return []
+  }, [isFetched, data])
+  useEffect(() => {
+    console.log('=======', getAllProjectsResult)
+  }, [getAllProjectsResult])
   return (
-    <div>
+    <div className='flex flex-col gap-4'>
       <CourseCarousel list={MockCourseList} />
-      <Listbox aria-label="Actions" onAction={(key) => alert(key)}>
-        {courseList.map((course, index) => {
+      <div className='flex flex-col gap-4 mx-4'>
+        {freeCourseList.map((course, index) => {
           return (
-            <ListboxItem className="overflow-visible" key={index}>
-              <CourseListItem course={{ ...course }} />
-            </ListboxItem>
+            <CourseListItem key={index} course={{ ...course, completed: false, claimed: false }} />
           )
         })}
-      </Listbox>
+
+        {chainCourseList.map(course => {
+          const { id, completed, description, name } = course
+          return <CourseListItem key={id} course={
+            {
+              id: id.toString(),
+              title: name,
+              description,
+              free: false,
+              completed,
+              claimed: false
+            }
+          } />
+        })}
+      </div>
+
     </div>
   )
 }

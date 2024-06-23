@@ -17,6 +17,7 @@
     "@rainbow-me/rainbowkit": "^2.1.2",
     "@tanstack/react-query": "^5.28.4",
     "canvas-confetti": "^1.9.3",
+    "classnames": "^2.5.1",
     "cookie": "^0.6.0",
     "framer-motion": "^11.2.10",
     "mongoose": "^8.4.1",
