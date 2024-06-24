@@ -9,6 +9,14 @@ export const StakeContractConstant = {
         getAllProjects: {
             signatures: "function getAllProjects() view returns ((uint256 id, string name, string description, uint256 requiredStake, address creator, bool completed, address[] participants)[])",
             functionName: 'getAllProjects'
+        },
+        getProjectDetails: {
+            signatures: 'function getProjectDetails(uint256 _projectId) view returns ((uint256 id, string name, string description, uint256 requiredStake, address creator, bool completed, address[] participants))',
+            functionName: 'getProjectDetails'
+        },
+        getUserProjects: {
+            signatures: 'function getUserProjects(address _user) view returns (uint256[])',
+            functionName: 'getUserProjects'
         }
     } as const satisfies Record<string, ContractMethod>
 } as const

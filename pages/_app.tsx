@@ -13,7 +13,7 @@ import {
   sepolia,
   lineaSepolia,
 } from 'wagmi/chains'
-import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { getDefaultConfig, lightTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { NextUIProvider } from '@nextui-org/react'
 import { NextPage } from 'next'
 import { ReactElement, ReactNode } from 'react'
@@ -49,7 +49,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <NextUIProvider>
       <WagmiProvider config={config}>
         <QueryClientProvider client={client}>
-          <RainbowKitProvider>
+          <RainbowKitProvider theme={lightTheme({
+            accentColor: '#9999ff',
+            accentColorForeground: 'white',
+          })}>
             <Head>
               <title>W3E</title>
               <meta

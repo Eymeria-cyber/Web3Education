@@ -17,6 +17,7 @@ const { Address: StakeContractAddress, Contract, StakeValueEther } = StakeContra
 const StakingPage: NextPage = () => {
   const router = useRouter()
   const courseId = router.query.id as string;
+  const pid = router.query.pid as string;
   const { isConnected } = useAccount()
   const { data: hash, writeContract, isPending, error } = useWriteContract()
   const { isLoading: isConfirming, isSuccess: isConfirmed, data } =
@@ -40,7 +41,7 @@ const StakingPage: NextPage = () => {
           address: StakeContractAddress,
           gasPrice: parseEther('0.000000001'),
           abi: parseAbi([Contract.stakeAndUnlockProject.signatures]),
-          args: [BigInt(courseId!)],
+          args: [BigInt(pid!)],
           functionName: Contract.stakeAndUnlockProject.functionName,
           value: parseEther(StakeValueEther),
         })
