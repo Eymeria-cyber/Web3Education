@@ -1,9 +1,14 @@
 import connectMongoDb from '../../../libs/db'
 import getCurrentUser from '../../../libs/getCurrentUser'
 import UserProgress from '../../../models/user/userProgress'
+import CoursesRelations from '../../../models/user/coursesRelations'
 const { handleMongooseError } = require('../../../libs/errorHandler')
+import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { method } = req
 
   switch (method) {
@@ -16,9 +21,9 @@ export default async function handler(req, res) {
         const userProgress = await UserProgress.findOne({
           username: currentUser.username,
           courseId: id,
-        }).lean() // 使用 lean() 方法以获得普通 JavaScript 对象
+        }) // 使用 lean() 方法以获得普通 JavaScript 对象(改为ts后就别用了)
         console.log(userProgress)
-        if (userProgress === null || userProgress === undefined) {
+        if (!userProgress) {
           res.status(200).json(0)
         } else {
           console.log(userProgress.segmentId)
@@ -34,9 +39,14 @@ export default async function handler(req, res) {
       try {
         //创建新课程
         const currentUser = getCurrentUser(req)
-        console.log(req.body)
         const segmentId = req.body.segmentId
-        console.log(segmentId)
+        if (req.body.isFinished) {
+          const result = await CoursesRelations.SaveAndUpdate(
+            currentUser.username,
+            req.body.courseId,
+            req.body.isFinished
+          )
+        }
         const existingUserProgress = await UserProgress.findOne({
           username: currentUser.username,
           courseId: req.body.courseId, // 假设 req.body.courseId 是你要检查的课程ID
@@ -44,7 +54,6 @@ export default async function handler(req, res) {
         if (existingUserProgress) {
           // 更新记录
           existingUserProgress.segmentId = segmentId // 假设 req.body.segmentId 是你要更新的字段
-          console.log(segmentId)
           await existingUserProgress.save()
           res.status(200).json(existingUserProgress)
         } else {

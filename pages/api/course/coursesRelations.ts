@@ -2,8 +2,12 @@ import connectMongoDb from '../../../libs/db'
 import getCurrentUser from '../../../libs/getCurrentUser'
 import CoursesRelations from '../../../models/user/coursesRelations'
 const { handleMongooseError } = require('../../../libs/errorHandler')
+import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { method } = req
   switch (method) {
     case 'GET':

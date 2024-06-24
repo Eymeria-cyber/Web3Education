@@ -58,12 +58,16 @@ const LearnPage: NextPageWithLayout<Props> = (props) => {
       }
     }
     fetchUserProgress()
-  }, [currentIndex, segmentList.length])
+  }, []) //bug修复：之前在这里写入了currenctindex，导致每次点继续，currentindex有了变化就会执行一次useEffect
 
   //关闭，并保存进度。
   const Close = async () => {
     // 确保 currentIndex 是数字类型
     const segmentId = Number(currentIndex)
+    let finish = false
+    if (+currentIndex === segmentList.length) {
+      finish = true
+    }
     const response = await fetch('/api/course/userProgress', {
       method: 'POST',
       headers: {
@@ -72,6 +76,7 @@ const LearnPage: NextPageWithLayout<Props> = (props) => {
       body: JSON.stringify({
         courseId: props.id,
         segmentId: segmentId,
+        isFinished: finish,
       }),
     })
 

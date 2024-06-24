@@ -24,7 +24,6 @@ const Course = (() => {
     */
     return mongoose.model('Course')
   } catch {
-    //如果mongo已经有一个模型被定义，就直接返回这个模型。
     return mongoose.model('Course', CourseSchema)
   }
 })()

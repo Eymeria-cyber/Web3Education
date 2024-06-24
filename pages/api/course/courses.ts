@@ -1,10 +1,12 @@
-import { json } from 'stream/consumers'
 import connectMongoDb from '../../../libs/db'
 import Course from '../../../models/course'
-import mongoose from 'mongoose'
 const { handleMongooseError } = require('../../../libs/errorHandler')
+import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { method } = req
   switch (method) {
     case 'GET':
@@ -18,7 +20,6 @@ export default async function handler(req, res) {
         } else {
           courses = await Course.find({}) // 获取所有课程
         }
-        console.log(courses)
         res.status(200).json(courses)
       } catch (error) {
         res.status(500).json({ error: 'Error fetching course.' })
