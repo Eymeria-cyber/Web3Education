@@ -1,11 +1,12 @@
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { NavPage } from "../../components/BottomBar";
 import RootLayout from "../../components/RootLayout";
 import { NextPageWithLayout } from "../_app";
 
 const ProfilePage: NextPageWithLayout = () => {
     return (
-        <div>
-        <h1>Profile</h1>
+        <div className="p-10">
+            <ConnectButton />
         </div>
     );
 }
