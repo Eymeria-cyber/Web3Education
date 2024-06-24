@@ -1,4 +1,4 @@
-import { NextPageWithLayout } from '../../_app'
+import { NextPageWithLayout } from '../../../_app'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Segment } from './Segment'
@@ -6,16 +6,17 @@ import { GetServerSidePropsContext } from 'next'
 import { User, Link, Progress } from '@nextui-org/react'
 import LearnButton from './LearnBottom'
 import { IoClose } from 'react-icons/io5'
+import { SegmentType } from '@/models/course'
 
-export type segment = {
-  _id: number
-  title: string
-  chineseSubtitle: string
-  englishSubtitle: string
-  audioUrl: string
-}
+// export type SegmentType = {
+//   _id: number
+//   title: string
+//   chineseSubtitle: string
+//   englishSubtitle: string
+//   audioUrl: string
+// }
 type Props = {
-  initialSegments: segment[]
+  initialSegments: SegmentType[]
   id: string
 }
 
@@ -33,7 +34,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 const LearnPage: NextPageWithLayout<Props> = (props) => {
   const router = useRouter()
-  const [segmentList, setSegmentList] = useState<segment[]>(
+  const [segmentList, setSegmentList] = useState<SegmentType[]>(
     props.initialSegments
   )
   const [currentIndex, setCurrentIndex] = useState<number>(1)
@@ -116,6 +117,7 @@ const LearnPage: NextPageWithLayout<Props> = (props) => {
       </nav>
       {segmentList.map((segment, index) => (
         <div
+          key={segment._id}
           style={{
             display: currentIndex - 1 >= index ? 'block' : 'none',
             // transform:

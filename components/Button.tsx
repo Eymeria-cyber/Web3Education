@@ -11,8 +11,8 @@ type Props = {
     className?: string;
 }
 export const PrimaryButton: FC<Props> = (props) => {
-    const { active = false, onClick, children, disabled } = props
-    return <Button onClick={onClick} disabled={disabled} className={classNames(styles.button, {
+    const { active = false, onClick, children, disabled, className } = props
+    return <Button onClick={onClick} disabled={disabled} className={classNames(styles.button, className, {
         [styles.active]: active
     })}>{children}</Button>
 }

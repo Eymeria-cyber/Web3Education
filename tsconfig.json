@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -15,7 +19,12 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/contract": ["./contract"],
+      "@/contract": [
+        "./contract"
+      ],
+      "@/models/*": [
+        "./models/*"
+      ]
     },
   },
   "include": [
@@ -23,7 +32,9 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/login.tsx",
-    "pages/api/course/[courseId].js"
+    "pages/api/course/[courseId]/index.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
