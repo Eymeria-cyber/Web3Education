@@ -1,5 +1,5 @@
 import connectMongoDb from '../../../libs/db'
-import Course from '../../../models/course'
+import Course from '@/models/course'
 const { handleMongooseError } = require('../../../libs/errorHandler')
 import { NextApiRequest, NextApiResponse } from 'next'
 

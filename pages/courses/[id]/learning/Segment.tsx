@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { segment } from '.'
 import { Card, Tab, Textarea, Button } from '@nextui-org/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faVolumeUp } from '@fortawesome/free-solid-svg-icons'
 
 import { IconType } from 'react-icons'
+import { SegmentType } from '@/models/course'
 
 type SegmentProps = {
-  segment: segment
+  segment: SegmentType
 }
 
 export const Segment: React.FC<SegmentProps> = ({ segment }) => {

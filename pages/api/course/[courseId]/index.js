@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import connectMongoDb from '../../../libs/db'
-import UserProgress from '../../../models/user/userProgress'
-import { encrypt, decrypt } from '../../../libs/crypto'
+import connectMongoDb from '../../../../libs/db'
+import UserProgress from '../../../../models/user/userProgress'
+import { encrypt, decrypt } from '../../../../libs/crypto'
 const { handleMongooseError } = require('../../../libs/errorHandler')
 
 export default async function handler(req, res) {

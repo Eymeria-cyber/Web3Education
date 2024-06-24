@@ -47,10 +47,10 @@ export const CourseListItem: FC<Props> = (props) => {
       <Divider className='mb-0 mx-3 w-auto'/>
       <CardFooter className="flex justify-end item-center pt-0">
         {course.free && (
-          <Button onClick={() => router.push(`${router.asPath}/learning?id=${course._id}`)} color='success'>
+          <Button onClick={() => router.push(`${router.asPath}/${course._id}/learning`)} color='success'>
             <Link
               // @ts-ignore
-              href={`${router.asPath}/learning?id=${course._id}`}
+              href={`${router.asPath}/${course._id}/learning`}
               className="text-white"
             >
               Free To Learn
@@ -71,7 +71,7 @@ export const CourseListItem: FC<Props> = (props) => {
           {/* 是否需要区分是否claimed？还是直接完成？ */}
           {course.staked && !course.completed && <Button color="warning" variant="solid">
             <Link
-              href={`${router.asPath}/learning?id=${course._id}&pid=${pid}`}
+              href={`${router.asPath}/${course._id}/learning?pid=${pid}`}
               className="text-white"
             >
               Continue

@@ -1,6 +1,6 @@
 import connectMongoDb from '../../../libs/db'
 import getCurrentUser from '../../../libs/getCurrentUser'
-import CoursesRelations from '../../../models/user/coursesRelations'
+import CoursesRelations from '@/models/user/coursesRelations'
 const { handleMongooseError } = require('../../../libs/errorHandler')
 import { NextApiRequest, NextApiResponse } from 'next'
 
