@@ -29,9 +29,7 @@ export const Segment: React.FC<SegmentProps> = ({ segment }) => {
           controls
           src={`http://localhost:3000/${segment.audioUrl}`}
           className="mt-4"
-        >
-          Your browser does not support the audio element.
-        </audio>
+        ></audio>
         <Button
           color="success"
           variant="solid"

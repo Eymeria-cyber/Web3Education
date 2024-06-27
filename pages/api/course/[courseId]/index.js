@@ -35,7 +35,6 @@ export default async function handler(req, res) {
         segmentId: segmentId,
       })
       await newProgress.save()
-
       return res.status(201).json(newProgress)
     } catch (error) {
       handleMongooseError(error, res)

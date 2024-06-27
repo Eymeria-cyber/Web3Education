@@ -1,14 +1,34 @@
-import { NavPage } from "../../components/BottomBar";
-import RootLayout from "../../components/RootLayout";
-import { NextPageWithLayout } from "../_app";
+import { NavPage } from '../../components/BottomBar'
+import RootLayout from '../../components/RootLayout'
+import { NextPageWithLayout } from '../_app'
+import { PrimaryButton } from '../../components/Button'
+import { useRouter } from 'next/router'
 
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Divider,
+  Link,
+  Image,
+  Button,
+} from '@nextui-org/react'
 const ActivityPage: NextPageWithLayout = () => {
-    return (
-        <div>
-        <h1>Activity</h1>
-        </div>
-    );
-}
-ActivityPage.getLayout = (page) => <RootLayout activePage={NavPage.Activity}>{page}</RootLayout>;
+  const router = useRouter()
 
-export default ActivityPage;
+  return (
+    <div>
+      <PrimaryButton>
+        <Link href={`${router.asPath}/ai`} className="text-white">
+          ChatWithAI
+        </Link>
+      </PrimaryButton>
+    </div>
+  )
+}
+ActivityPage.getLayout = (page) => (
+  <RootLayout activePage={NavPage.Activity}>{page}</RootLayout>
+)
+
+export default ActivityPage
