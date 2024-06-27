@@ -1,7 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
 import { main } from './pronunciationAssessment'
 import * as settings from '../../../libs/speechSettings'
-import { PronunciationAssessmentResult } from 'microsoft-cognitiveservices-speech-sdk'
+import {
+  PronunciationAssessmentResult,
+  SpeechConfig,
+  AudioConfig,
+  SpeechRecognizer,
+  SpeechRecognitionResult,
+} from 'microsoft-cognitiveservices-speech-sdk'
+import * as sdk from 'microsoft-cognitiveservices-speech-sdk'
+import wavEncoder from 'wav-encoder'
+import { saveAs } from 'file-saver'
 import Flex from 'antd/lib/flex'
 import Progress from 'antd/lib/progress'
 import { green, red } from '@ant-design/colors'
@@ -18,7 +27,7 @@ export default function Home() {
   const [isRecording, setIsRecording] = useState(false)
   const [audioURL, setAudioURL] = useState('')
   const mediaRecorderRef = useRef<any>(null)
-  const audioChunksRef = useRef([])
+  const audioChunksRef = useRef<Blob[]>([])
 
   useEffect(() => {
     if ('webkitSpeechRecognition' in window) {
@@ -61,9 +70,47 @@ export default function Home() {
       console.warn('Web Speech API is not supported in this browser.')
     }
   }, [isListening])
+  // 将 buffer 保存为 WAV 文件
+  function saveBufferAsWav(buffer, fileName) {
+    const blob = new Blob([buffer], { type: 'audio/wav' })
+    saveAs(blob, fileName)
+  }
+
+  //保存为file
+  const getAudioFile = () => {
+    const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' })
+    const audioFile = new File([audioBlob], 'audio.wav', { type: 'audio/wav' })
+    return audioFile
+  }
 
   const handleListen = () => {
     setIsListening((prevState) => !prevState)
+  }
+  const evaluatePronunciation = async () => {
+    const audioBase64 = getAudioFile()
+
+    const speechConfig = sdk.SpeechConfig.fromSubscription(
+      settings.subscriptionKey,
+      settings.serviceRegion
+    )
+    const pronunciationAssessmentConfig = new sdk.PronunciationAssessmentConfig(
+      '',
+      sdk.PronunciationAssessmentGradingSystem.HundredMark,
+      sdk.PronunciationAssessmentGranularity.Phoneme,
+      true
+    )
+
+    const audioConfig = sdk.AudioConfig.fromWavFileInput(audioBase64)
+
+    const recognizer = new sdk.SpeechRecognizer(speechConfig, audioConfig)
+    pronunciationAssessmentConfig.applyTo(recognizer)
+    recognizer.recognizeOnceAsync((result) => {
+      const pronunciationResult =
+        sdk.PronunciationAssessmentResult.fromResult(result)
+      console.log(
+        `Pronunciation score: ${pronunciationResult.pronunciationScore}`
+      )
+    })
   }
 
   const handleStartRecording = () => {
@@ -81,13 +128,28 @@ export default function Home() {
           const audioBlob = new Blob(audioChunksRef.current, {
             type: 'audio/wav',
           })
-          console.log(audioBlob)
+          console.log(process.env.NEXT_PUBLIC_SUBSCRIPTION_KEY)
           const audioUrl = URL.createObjectURL(audioBlob)
           const arrybuffer = await audioBlob.arrayBuffer()
+          console.log('这是arraybuffer', arrybuffer)
+          const audioContext = new (window.AudioContext ||
+            window.webkitAudioContext)()
+          const audioBuffer = await audioContext.decodeAudioData(arrybuffer)
+          const leftChannel = audioBuffer.getChannelData(0) // 左声道 PCM 数据
           // const buffer = Buffer.from(arrybuffer)
-          // settings.setSpeechBuffter(buffer)
-          // const result = await main(settings)
+          console.log('这是前端的blob', audioBlob)
 
+          const whiteNoise1sec = {
+            sampleRate: 44100,
+            channelData: [leftChannel],
+          }
+          //这是一个异步操作，会导致buffer总是滞后。
+          // wavEncoder.encode(whiteNoise1sec).then((buffer) => {
+          //   settings.setSpeechBuffter(Buffer.from(buffer))
+          // })
+          const buffer = await wavEncoder.encode(whiteNoise1sec)
+          settings.setSpeechBuffter(Buffer.from(buffer))
+          const result = main(settings)
           setAudioURL(audioUrl)
           console.log(audioUrl)
           audioChunksRef.current = []

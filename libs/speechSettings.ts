@@ -3,8 +3,8 @@
 
 // Replace with your own subscription key, service region (e.g., "westus"),
 // and recognition language.
-export const subscriptionKey = 'YourSubscriptionKey'
-export const serviceRegion = 'eastasia' // e.g., "westus"
+export const subscriptionKey = process.env.NEXT_PUBLIC_SUBSCRIPTION_KEY
+export const serviceRegion = 'eastus' // e.g., "westus"
 export const language = 'en-US'
 
 // Replace with the full path to a wav file you want to recognize or overwrite.

@@ -9,7 +9,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-color: rgba(250, 207, 250, 0.8);
-    /* 粉色区域，同样保持较高透明度 */
+  /* 粉色区域，同样保持较高透明度 */
 }
 
 a {
