@@ -1,34 +1,51 @@
 import { useState, useEffect, useRef } from 'react'
 import { main } from './pronunciationAssessment'
+import ScoreComponet from './Score'
 import * as settings from '../../../libs/speechSettings'
-import {
-  PronunciationAssessmentResult,
-  SpeechConfig,
-  AudioConfig,
-  SpeechRecognizer,
-  SpeechRecognitionResult,
-} from 'microsoft-cognitiveservices-speech-sdk'
-import * as sdk from 'microsoft-cognitiveservices-speech-sdk'
+import { PronunciationAssessmentResult } from 'microsoft-cognitiveservices-speech-sdk'
+import { IoChevronBack } from 'react-icons/io5'
 import wavEncoder from 'wav-encoder'
 import { saveAs } from 'file-saver'
 import Flex from 'antd/lib/flex'
-import Progress from 'antd/lib/progress'
-import { green, red } from '@ant-design/colors'
 import VoiceSVG from './voiceSVG'
+import _ from 'lodash'
+import { NavPage } from '../../../components/BottomBar'
+import { NextPageWithLayout } from '../../_app'
+import RootLayout from '../../../components/RootLayout'
+import style from './index.module.css'
+import classNames from 'classnames'
+import { useRouter } from 'next/router'
+import { Textarea } from '@nextui-org/input'
+
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Avatar,
+  Button,
+} from '@nextui-org/react'
 
 declare global {
   interface Window {
     webkitSpeechRecognition: any
   }
 }
-export default function Home() {
+const AiPronunciationAssmentPage: NextPageWithLayout = () => {
   const [transcript, setTranscript] = useState('')
   const [isListening, setIsListening] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [audioURL, setAudioURL] = useState('')
   const mediaRecorderRef = useRef<any>(null)
   const audioChunksRef = useRef<Blob[]>([])
-
+  const [result, setResult] = useState<PronunciationAssessmentResult>()
+  const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
+  const Back = () => {
+    router.back()
+  }
+  const reference_text = `okay,thank you very much for the introduction Harry.good morning good afternoon good evening depending on where you are.so I'm here based in Singapore,so my name is YiLi.I'm associate professor at the College of Computing and Data Science from the NanYang Technological University`
+  settings.setReference_text(reference_text)
   useEffect(() => {
     if ('webkitSpeechRecognition' in window) {
       const recognition = new window.webkitSpeechRecognition()
@@ -70,10 +87,23 @@ export default function Home() {
       console.warn('Web Speech API is not supported in this browser.')
     }
   }, [isListening])
-  // 将 buffer 保存为 WAV 文件
-  function saveBufferAsWav(buffer, fileName) {
-    const blob = new Blob([buffer], { type: 'audio/wav' })
-    saveAs(blob, fileName)
+
+  const getErrorTypeClass = (errorType: string) => {
+    switch (errorType) {
+      case 'Mispronunciation':
+        return 'bg-yellow-500'
+      case 'Insertion':
+        return 'bg-red-500'
+      case 'Omission':
+        return 'bg-gray-500'
+      default:
+        return ''
+    }
+  }
+  const blockStyle = {
+    width: '10px',
+    height: '10px',
+    margin: '10px',
   }
 
   //保存为file
@@ -85,32 +115,6 @@ export default function Home() {
 
   const handleListen = () => {
     setIsListening((prevState) => !prevState)
-  }
-  const evaluatePronunciation = async () => {
-    const audioBase64 = getAudioFile()
-
-    const speechConfig = sdk.SpeechConfig.fromSubscription(
-      settings.subscriptionKey,
-      settings.serviceRegion
-    )
-    const pronunciationAssessmentConfig = new sdk.PronunciationAssessmentConfig(
-      '',
-      sdk.PronunciationAssessmentGradingSystem.HundredMark,
-      sdk.PronunciationAssessmentGranularity.Phoneme,
-      true
-    )
-
-    const audioConfig = sdk.AudioConfig.fromWavFileInput(audioBase64)
-
-    const recognizer = new sdk.SpeechRecognizer(speechConfig, audioConfig)
-    pronunciationAssessmentConfig.applyTo(recognizer)
-    recognizer.recognizeOnceAsync((result) => {
-      const pronunciationResult =
-        sdk.PronunciationAssessmentResult.fromResult(result)
-      console.log(
-        `Pronunciation score: ${pronunciationResult.pronunciationScore}`
-      )
-    })
   }
 
   const handleStartRecording = () => {
@@ -131,13 +135,11 @@ export default function Home() {
           console.log(process.env.NEXT_PUBLIC_SUBSCRIPTION_KEY)
           const audioUrl = URL.createObjectURL(audioBlob)
           const arrybuffer = await audioBlob.arrayBuffer()
-          console.log('这是arraybuffer', arrybuffer)
           const audioContext = new (window.AudioContext ||
             window.webkitAudioContext)()
           const audioBuffer = await audioContext.decodeAudioData(arrybuffer)
           const leftChannel = audioBuffer.getChannelData(0) // 左声道 PCM 数据
           // const buffer = Buffer.from(arrybuffer)
-          console.log('这是前端的blob', audioBlob)
 
           const whiteNoise1sec = {
             sampleRate: 44100,
@@ -149,7 +151,10 @@ export default function Home() {
           // })
           const buffer = await wavEncoder.encode(whiteNoise1sec)
           settings.setSpeechBuffter(Buffer.from(buffer))
-          const result = main(settings)
+          setIsLoading(false)
+          const result = await main(settings)
+          setIsLoading(true)
+          setResult(result)
           setAudioURL(audioUrl)
           console.log(audioUrl)
           audioChunksRef.current = []
@@ -169,56 +174,80 @@ export default function Home() {
     setIsRecording(false)
     setIsListening((prevState) => !prevState)
   }
-  const colors = ['#f5222d', '#faad14', '#52c41a'] // 红色, 黄色, 绿色
-  const getColor = (score: number): string => {
-    return colors[Math.min(Math.floor(score / 30), 2)]
-  }
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Speech to Text and Audio Recording Demo</h1>
-      {/* <button onClick={handleListen}>
-        {isListening ? 'Stop Listening' : 'Start Listening'}
-      </button> */}
-      <button
-        className="rounded-full mt-10 w-12 h-12 m-auto flex items-center bg-white"
-        onClick={isRecording ? handleStopRecording : handleStartRecording}
-      >
-        {VoiceSVG(isRecording)}
-      </button>
-      <p>{transcript}</p>
-      {audioURL && (
-        <div>
-          <h2>Recorded Audio</h2>
-          <audio src={audioURL} controls></audio>
-          <a href={audioURL} download="recording.wav">
-            Download Recording
-          </a>
-
-          <Flex wrap>
-            <p>准确度分数</p>
-            <Progress
-              type="line"
-              percent={70}
-              strokeColor={getColor(70)}
-              format={(percent) => percent}
-            />
-            <p>准确度分数</p>
-            <Progress
-              type="line"
-              percent={70}
-              strokeColor={getColor(70)}
-              format={(percent) => percent}
-            />
-            <p>准确度分数</p>
-            <Progress
-              type="line"
-              percent={70}
-              strokeColor={getColor(70)}
-              format={(percent) => percent}
-            />
-          </Flex>
+    <div className="bg-stone-50 container mx-auto">
+      <nav className="flex items-center justify-between h-12 md:h-full p-4">
+        <button
+          className="text-2xl flex item-center cursor-pointer text-black"
+          onClick={Back}
+        >
+          <IoChevronBack className="flex item-center mt" />
+          <span className="ml-2 text-lg font-semibold align-middle levrelative">
+            Black
+          </span>
+        </button>
+      </nav>
+      <h3 className="justify-center flex p-2 font-semibold">
+        Let's start practicing pronunciation
+      </h3>
+      <Textarea
+        label="Description"
+        placeholder={reference_text}
+        className=""
+      ></Textarea>
+      <div className="justify-center">
+        <Card
+          className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px] bg-stone-100  max-auto"
+          shadow="sm"
+        >
+          <CardBody>
+            <audio src={audioURL} controls className="w-full"></audio>
+            <button
+              className="rounded-full mt-10 w-8 h-8 m-auto flex items-center justify-center bg-white "
+              onClick={isRecording ? handleStopRecording : handleStartRecording}
+            >
+              {VoiceSVG(isRecording)}
+            </button>
+          </CardBody>
+        </Card>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ ...blockStyle }} className="bg-red-500"></div>
+          <span>: Insertion</span>
         </div>
-      )}
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ ...blockStyle }} className="bg-gray-500"></div>
+          <span>: Omission</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ ...blockStyle }} className="bg-yellow-500"></div>
+          <span>: Mispronunciation</span>
+        </div>
+        {/* <a href={audioURL} download="recording.wav">
+            Download Recording
+          </a> */}
+        <div className="mt-4">
+          <div className={classNames(style.bubble, style.container)}>
+            {result?.detailResult.Words.map((words, idx) => (
+              <span
+                key={idx}
+                className={getErrorTypeClass(
+                  words.PronunciationAssessment.ErrorType
+                )}
+              >
+                {words.Word}{' '}
+              </span>
+            ))}
+          </div>
+        </div>
+        <Flex wrap className="max-w-[98%] mx-auto ">
+          {result && ScoreComponet(result)}
+        </Flex>
+      </div>
     </div>
   )
 }
+AiPronunciationAssmentPage.getLayout = (page) => (
+  <RootLayout activePage={NavPage.Courses}>{page}</RootLayout>
+)
+
+export default AiPronunciationAssmentPage

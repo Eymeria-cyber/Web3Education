@@ -103,7 +103,7 @@ const LearnPage: NextPageWithLayout<Props> = (props) => {
   }
 
   return (
-    <div className="container md:max-auto">
+    <div className="container md:max-auto bg-stone-50">
       <nav className="flex items-center justify-between h-12 md:h-full p-4">
         <div className="text-2xl ">
           <IoClose onClick={Close} />

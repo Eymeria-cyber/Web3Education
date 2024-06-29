@@ -3,7 +3,8 @@
 
 // Replace with your own subscription key, service region (e.g., "westus"),
 // and recognition language.
-export const subscriptionKey = process.env.NEXT_PUBLIC_SUBSCRIPTION_KEY
+export const subscriptionKey =
+  process.env.NEXT_PUBLIC_SUBSCRIPTION_KEY || 'NoKey'
 export const serviceRegion = 'eastus' // e.g., "westus"
 export const language = 'en-US'
 
