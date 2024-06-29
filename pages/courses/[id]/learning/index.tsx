@@ -69,6 +69,7 @@ const LearnPage: NextPageWithLayout<Props> = (props) => {
     if (+currentIndex === segmentList.length) {
       finish = true
     }
+    console.log(props.id)
     const response = await fetch('/api/course/userProgress', {
       method: 'POST',
       headers: {

@@ -51,13 +51,18 @@ export default async function handler(
           username: currentUser.username,
           courseId: req.body.courseId, // 假设 req.body.courseId 是你要检查的课程ID
         })
+        console.log(currentUser.username)
+
         if (existingUserProgress) {
           // 更新记录
+
           existingUserProgress.segmentId = segmentId // 假设 req.body.segmentId 是你要更新的字段
           await existingUserProgress.save()
           res.status(200).json(existingUserProgress)
         } else {
           // 如果不存在，创建新的记录
+          // console.log('进入这里')
+
           const newUserProgress = new UserProgress({
             courseId: req.body.courseId, // 使用扩展运算符复制 req.body 中的所有属性(...req.body)
             username: currentUser.username, // 确保添加 username 属性
