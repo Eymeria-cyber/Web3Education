@@ -4,7 +4,7 @@
 // pull in the required packages.
 import * as sdk from 'microsoft-cognitiveservices-speech-sdk'
 import _ from 'lodash'
-import * as speechSettings from '../../../libs/speechSettings'
+import * as speechSettings from '../../libs/speechSettings'
 
 // pronunciation assessment with audio file
 export const main = async (settings: typeof speechSettings) => {
@@ -66,9 +66,9 @@ export const main = async (settings: typeof speechSettings) => {
           ': word: ',
           word.Word,
           '\taccuracy score: ',
-          word.PronunciationAssessment.AccuracyScore,
+          word.PronunciationAssessment?.AccuracyScore,
           '\terror type: ',
-          word.PronunciationAssessment.ErrorType,
+          word.PronunciationAssessment?.ErrorType,
           ';'
         )
       })

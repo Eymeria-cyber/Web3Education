@@ -41,6 +41,7 @@ export default async function handler(
         const currentUser = getCurrentUser(req)
         const segmentId = req.body.segmentId
         if (req.body.isFinished) {
+          // @ts-ignore
           const result = await CoursesRelations.SaveAndUpdate(
             currentUser.username,
             req.body.courseId,

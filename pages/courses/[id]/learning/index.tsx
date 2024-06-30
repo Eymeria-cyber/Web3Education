@@ -1,12 +1,12 @@
 import { NextPageWithLayout } from '../../../_app'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Segment } from './Segment'
 import { GetServerSidePropsContext } from 'next'
 import { User, Link, Progress } from '@nextui-org/react'
-import LearnButton from './LearnBottom'
+import LearnButton from '../../../../components/courses/learning/LearnBottom'
 import { IoClose } from 'react-icons/io5'
 import { SegmentType } from '@/models/course'
+import { Segment } from '../../../../components/courses/learning/Segment'
 
 // export type SegmentType = {
 //   _id: number
