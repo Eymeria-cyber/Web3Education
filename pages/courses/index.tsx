@@ -9,7 +9,7 @@ import { useAccount, useReadContract } from 'wagmi'
 import { parseAbi } from 'viem'
 import { StakeContractConstant } from '@/contract'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-
+import Dify from "../../components/Dify"
 type Course = {
   _id: string
   title: string
@@ -108,6 +108,7 @@ const CoursePage: NextPageWithLayout = () => {
             )
           })}
         </div>
+        <Dify></Dify>
       </div>
     </div>
   )
