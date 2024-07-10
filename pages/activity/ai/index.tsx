@@ -188,7 +188,7 @@ const AiPronunciationAssmentPage: NextPageWithLayout = () => {
         </button>
       </nav>
       <h3 className="justify-center flex p-2 font-semibold">
-        Let's start practicing pronunciation
+        Let&apos;s start practicing pronunciation
       </h3>
       <Textarea
         label="Description"
