@@ -31,6 +31,7 @@ declare global {
     webkitSpeechRecognition: any
   }
 }
+
 const AiPronunciationAssmentPage: NextPageWithLayout = () => {
   const [transcript, setTranscript] = useState('')
   const [isListening, setIsListening] = useState(false)
@@ -136,7 +137,7 @@ const AiPronunciationAssmentPage: NextPageWithLayout = () => {
           const audioUrl = URL.createObjectURL(audioBlob)
           const arrybuffer = await audioBlob.arrayBuffer()
           const audioContext = new (window.AudioContext ||
-            window.webkitAudioContext)()
+            (window as any).webkitAudioContext)()
           const audioBuffer = await audioContext.decodeAudioData(arrybuffer)
           const leftChannel = audioBuffer.getChannelData(0) // 左声道 PCM 数据
           // const buffer = Buffer.from(arrybuffer)
@@ -231,7 +232,7 @@ const AiPronunciationAssmentPage: NextPageWithLayout = () => {
               <span
                 key={idx}
                 className={getErrorTypeClass(
-                  words.PronunciationAssessment.ErrorType
+                  words?.PronunciationAssessment?.ErrorType ?? 'Nothing'
                 )}
               >
                 {words.Word}{' '}
