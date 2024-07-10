@@ -1,14 +1,14 @@
 import { NavPage } from '../../components/BottomBar'
 import RootLayout from '../../components/RootLayout'
 import { NextPageWithLayout } from '../_app'
-import { MockCourseList } from './mock'
-import { CourseCarousel } from './CourseCarousel'
-import { CourseListItem } from './CourseListItem'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAccount, useReadContract } from 'wagmi'
 import { parseAbi } from 'viem'
 import { StakeContractConstant } from '@/contract'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { CourseCarousel } from '../../components/courses/CourseCarousel'
+import { CourseListItem } from '../../components/courses/CourseListItem'
+
 import Dify from "../../components/Dify"
 type Course = {
   _id: string
@@ -62,7 +62,7 @@ const CoursePage: NextPageWithLayout = () => {
   }, [stakeRequiredCourseList, userStakedCourseList])
   return (
     <div className="flex flex-col gap-4">
-      <CourseCarousel list={MockCourseList} />
+      <CourseCarousel list={stakeRequiredCourseList} />
       <div className="flex flex-col gap-4 mx-4">
         {freeCourseList.map((course, index) => {
           return (

@@ -55,6 +55,7 @@ export default async function handler(
     for (const [
       idx,
       word,
+      // @ts-ignore
     ] of pronunciation_result.detailResult.Words.entries()) {
       console.log(
         '    ',
@@ -62,9 +63,9 @@ export default async function handler(
         ': word:',
         word.Word,
         '\taccuracy score:',
-        word.PronunciationAssessment.AccuracyScore,
+        word.PronunciationAssessment?.AccuracyScore,
         '\terror type:',
-        word.PronunciationAssessment.ErrorType,
+        word.PronunciationAssessment?.ErrorType,
         ';'
       )
     }

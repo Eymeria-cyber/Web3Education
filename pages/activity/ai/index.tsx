@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { main } from './pronunciationAssessment'
+import { main } from '../../../components/activity/pronunciationAssessment'
 import ScoreComponet from './Score'
 import * as settings from '../../../libs/speechSettings'
 import { PronunciationAssessmentResult } from 'microsoft-cognitiveservices-speech-sdk'
@@ -29,6 +29,7 @@ import {
 declare global {
   interface Window {
     webkitSpeechRecognition: any
+    webkitAudioContext: any
   }
 }
 
