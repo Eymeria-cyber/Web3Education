@@ -9,6 +9,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { CourseCarousel } from '../../components/courses/CourseCarousel'
 import { CourseListItem } from '../../components/courses/CourseListItem'
 
+import Dify from "../../components/Dify"
 type Course = {
   _id: string
   title: string
@@ -107,6 +108,7 @@ const CoursePage: NextPageWithLayout = () => {
             )
           })}
         </div>
+        <Dify></Dify>
       </div>
     </div>
   )
